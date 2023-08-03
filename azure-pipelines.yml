@@ -14,8 +14,8 @@ variables:
   EndtoendTag: 'End to End'
 
 stages:
-- stage: dev
-  displayName: 'Dev'
+- stage: Build
+  displayName: Build'
   jobs:
   - job: Build
     displayName: 'Build Job'
