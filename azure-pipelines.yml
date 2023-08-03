@@ -1,116 +1,13 @@
-# azure-pipelines.yml
-
-trigger:
-  branches:
-    include:
-      - main
-
-pool:
-  vmImage: 'ubuntu-latest'
-
-variables:
-  smokeTag: 'Smoke'
-  regressionTag: 'Regression'
-  EndtoendTag: 'End to End'
-
-stages:
-- stage: dev
-  displayName: 'Dev'
-  jobs:
-  - job: Build
-    displayName: 'Build Job'
-    steps:
-    - script: echo "Building the application..."
-
-  - job: Dev
-    displayName: 'Smoke Tests'
-    condition: contains(variables['Build.SourceBranch'], 'refs/heads/main')  # Run only for the 'main' branch
-    steps:
-    - script: echo "Running smoke tests..."
-      displayName: 'Run Smoke Tests'
-
-  - job: Test
-    displayName: 'Regression Tests'
-    steps:
-    - script: echo "Running regression tests..."
-      displayName: 'Run Regression Tests'
-- stage: test
-  displayName: 'test'
-  jobs:
-  - job: Build_test
-    displayName: 'Build Job'
-    steps:
-    - script: echo "Building the application..."
-
-  - job: Test_2
-    displayName: 'Smoke Tests'
-    condition: contains(variables['Build.SourceBranch'], 'refs/heads/main')  # Run only for the 'main' branch
-    steps:
-    - script: echo "Running smoke tests..."
-      displayName: 'Run Smoke Tests'
-
-  - job: Test_3
-    displayName: 'Regression Tests'
-    steps:
-    - script: echo "Running regression tests..."
-      displayName: 'Run Regression Tests'
-- stage: Sit
-  displayName: 'SIT_Env'
-  jobs:
-  - job: Build_Sit
-    displayName: 'Build Job'
-    steps:
-    - script: echo "Building the application..."
-
-  - job: Test_2
-    displayName: 'Smoke Tests'
-    condition: contains(variables['Build.SourceBranch'], 'refs/heads/main')  # Run only for the 'main' branch
-    steps:
-    - script: echo "Running smoke tests..."
-      displayName: 'Run Smoke Tests'
-
-  - job: Test_3
-    displayName: 'Regression Tests'
-    steps:
-    - script: echo "Running regression tests..."
-      displayName: 'Run Regression Tests'
-- stage: pre_prod
-  displayName: 'pre_prod'
-  jobs:
-  - job: Build_pre_prod
-    displayName: 'Build Job'
-    steps:
-    - script: echo "Building the application..."
-
-  - job: Test_pre_prod
-    displayName: 'Smoke Tests'
-    condition: contains(variables['Build.SourceBranch'], 'refs/heads/main')  # Run only for the 'main' branch
-    steps:
-    - script: echo "Running smoke tests..."
-      displayName: 'Run Smoke Tests'
-
-  - job: Test_pre_prod1
-    displayName: 'Regression Tests'
-    steps:
-    - script: echo "Running regression tests..."
-      displayName: 'Run Regression Tests'
-- stage: prod
-  displayName: 'prod'
-  jobs:
-  - job: Build_pre_prod_3
-    displayName: 'Build Job'
-    steps:
-    - script: echo "Building the application..."
-
-  - job: Test_pre_prod_3
-    displayName: 'Smoke Tests'
-    condition: contains(variables['Build.SourceBranch'], 'refs/heads/main')  # Run only for the 'main' branch
-    steps:
-    - script: echo "Running smoke tests..."
-      displayName: 'Run Smoke Tests'
-
-  - job: Test_pre_prod_2
-    displayName: 'Regression Tests'
-    steps:
-    - script: echo "Running regression tests..."
-      displayName: 'Run Regression Tests'
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      jobs:
+      - job: Build
+        displayName: 'Build Job'
+        steps:
+        - script: |
+            # Replace this with your actual Python build commands
+            python -m pip install -r requirements.txt
+            python build.py
+          displayName: 'Building the application...'
