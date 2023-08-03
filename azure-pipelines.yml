@@ -34,6 +34,27 @@ stages:
     steps:
     - script: echo "Running regression tests..."
       displayName: 'Run Regression Tests'
+
+- stage: Dev
+  displayName: Dev'
+  jobs:
+  - job: Build
+    displayName: 'Build Job'
+    steps:
+    - script: echo "Building the application..."
+
+  - job: Dev
+    displayName: 'Smoke Tests'
+    condition: contains(variables['Build.SourceBranch'], 'refs/heads/main')  # Run only for the 'main' branch
+    steps:
+    - script: echo "Running smoke tests..."
+      displayName: 'Run Smoke Tests'
+
+  - job: Test
+    displayName: 'Regression Tests'
+    steps:
+    - script: echo "Running regression tests..."
+      displayName: 'Run Regression Tests'
 - stage: test
   displayName: 'test'
   jobs:
